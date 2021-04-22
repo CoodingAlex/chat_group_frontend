@@ -7,6 +7,7 @@ const useInitialState = () => {
   const [currentChat, setCurrentChat] = useState('welcome')
   const [messages, setMessages] = useState([])
   const [chats, setChats] = useState([])
+  const [availableRooms, setAvailableRooms] = useState([])
   const [state, setState] = useState({
     filteredMessages: [],
   })
@@ -26,6 +27,14 @@ const useInitialState = () => {
         setMessages((prev) => [...prev, newMessage])
       })
 
+      socket.on('newRoom', (data) => {
+        const newChat = {
+          name: data.room,
+          users: data.users,
+        }
+        console.log('new room')
+          setAvailableRooms((prev) => [...prev, newChat])
+      })
       // This happens when you join to a new chat, or someone join to a chat
       // that you are already in
       socket.on('joinedRoom', (data) => {
@@ -33,6 +42,7 @@ const useInitialState = () => {
           name: data.room,
           users: data.users,
         }
+
         //check if chat already exists
         setChats((prev) => {
           const exists = prev.filter((chat) => chat.name === newChat.name)
@@ -50,6 +60,7 @@ const useInitialState = () => {
   // when the state current chat change or when you recibe a new message
   useEffect(() => {
     const filteredMessages = filterMessages(currentChat)
+
     setState({
       ...state,
       filteredMessages,
@@ -63,9 +74,14 @@ const useInitialState = () => {
   }
 
   const joinChat = (chat) => {
-    socket.emit('joinRoom', { room: chat })
+    socket?.emit('joinRoom', { room: chat })
+    setAvailableRooms(prev => {
+      return prev.filter(item => item.name !== chat)
+    })
     setCurrentChat(chat)
   }
+
+  
 
   const sendMessage = (chat, message = 'aaa') => {
     socket.emit('message', { room: chat, message })
@@ -78,6 +94,7 @@ const useInitialState = () => {
     sendMessage,
     messages,
     chats,
+    availableRooms
   }
 }
 

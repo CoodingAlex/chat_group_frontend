@@ -2,13 +2,14 @@ import styled from 'styled-components'
 
 export const ChatContainer = styled.div`
 	width: 100%;
-	padding: 0 50px;
 	background: #252329;
 	color: #E0E0E0;
 `
 
 export const ChatMessages = styled.div`
 	height: 80%;
+	margin: 0 50px;
+	margin-top: 15px;
 	overflow: scroll;
 	&::-webkit-scrollbar {
     display: none;
@@ -17,6 +18,7 @@ export const ChatMessages = styled.div`
 
 export const ChatInputContainer = styled.div`
 	height: 10%;
+	margin: 0 50px;
 	display: flex;
 	flex-direction: row;
 	button {
@@ -38,4 +40,8 @@ export const ChatInputContainer = styled.div`
 
 export const ChatHeader = styled.div`
 	height: 10%;
+	padding: 0 50px;
+	display: flex;
+	align-items: center;
+	box-shadow: 0px 4px 4px rgba(0,0,0,0.25)
 `

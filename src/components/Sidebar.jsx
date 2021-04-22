@@ -3,7 +3,7 @@ import AppContext from '../context/AppContext'
 import { SidebarContainer, ChannelsContainer } from '../assets/styles/components/Sidebar'
 const Sidebar = ({}) => {
   const [inp, setInp] = useState('')
-  const { chats, setCurrentChat, joinChat } = useContext(AppContext)
+  const { chats, setCurrentChat, joinChat, availableRooms } = useContext(AppContext)
   return (
     <SidebarContainer>
       <input
@@ -27,7 +27,11 @@ const Sidebar = ({}) => {
         </p>
       ))}
       </ChannelsContainer
-        >
+      >
+        <h3>Available</h3>
+        {availableRooms.map(room => {
+          return <p onClick={() => {joinChat(room.name)}}>{room.name}</p>
+        })}
     </SidebarContainer>
   )
 }
