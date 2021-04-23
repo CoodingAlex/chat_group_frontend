@@ -6,6 +6,7 @@ import {
   ChatInputContainer,
   ChatMessages,
 } from '../assets/styles/components/Chat'
+import Message from './Message'
 import Input from './Input'
 
 const Chat = ({}) => {
@@ -18,7 +19,7 @@ const Chat = ({}) => {
       </ChatHeader>
       <ChatMessages>
         {state.filteredMessages?.map((message) => (
-          <p>{message.message}</p>
+            <Message {...message}/>
         ))}
       </ChatMessages>
         <Input inp={inp} setInp={setInp} />

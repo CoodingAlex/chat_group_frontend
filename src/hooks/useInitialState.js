@@ -20,9 +20,13 @@ const useInitialState = () => {
 
       // This happens when you recibe a new message
       socket.on('message', (data) => {
+          console.log(data)
         const newMessage = {
           chat: data.room,
           message: data.message,
+          name: data.name,
+          photo: data.photo,
+          timestamp: data.timeStamp
         }
         setMessages((prev) => [...prev, newMessage])
       })
@@ -49,7 +53,14 @@ const useInitialState = () => {
           if (exists.length === 0) {
             return [...prev, newChat]
           }
-          return [...prev]
+          const newData = prev.map(item => {
+              if(item.name === exists[0].name){
+                  item.users = data.users
+                  return item
+              }
+              return item
+          })
+          return [...newData]
         })
       })
       //TODO: implement the error handling
@@ -81,7 +92,10 @@ const useInitialState = () => {
     setCurrentChat(chat)
   }
 
-  
+  const getCurrentChatUsers = () => {
+    const users = chats.filter(item => item.name === currentChat)[0].users
+    return users
+  }
 
   const sendMessage = (chat, message = 'aaa') => {
     socket.emit('message', { room: chat, message })
@@ -94,7 +108,8 @@ const useInitialState = () => {
     sendMessage,
     messages,
     chats,
-    availableRooms
+    availableRooms,
+    getCurrentChatUsers
   }
 }
 

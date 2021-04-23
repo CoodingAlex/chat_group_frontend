@@ -7,7 +7,7 @@ export const ChatContainer = styled.div`
 `
 
 export const ChatMessages = styled.div`
-	height: 80%;
+	height: 80vh;
 	margin: 0 50px;
 	margin-top: 15px;
 	overflow: scroll;
