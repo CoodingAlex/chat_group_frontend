@@ -39,7 +39,7 @@ export const ChatInputContainer = styled.div`
 `
 
 export const ChatHeader = styled.div`
-	height: 10%;
+	height: 7%;
 	padding: 0 50px;
 	display: flex;
 	align-items: center;

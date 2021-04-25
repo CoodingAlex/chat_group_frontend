@@ -1,52 +1,62 @@
 import React, { useContext, useState } from 'react'
 import AppContext from '../context/AppContext'
 import {
-  SidebarContainer,
   ChannelsContainer,
+  AllChannelsHeader,
+  Channel,
 } from '../assets/styles/components/Sidebar'
-
+import Modal from './Modal'
 function memoized(prevProps, nextProps) {
   return true
 }
-const AllChannelsSidebar = ({setAllChannelsMode}) => {
-  const [inp, setInp] = useState('')
-  const { chats, setCurrentChat, joinChat, availableRooms } = useContext(AppContext)
+const AllChannelsSidebar = ({ setAllChannelsMode }) => {
+  const [titleValue, setTitleValue] = useState('')
+  const [descriptionValue, setDescriptionValue] = useState('')
+  const [isModal, setIsModal] = useState(false)
+  const { chats, setCurrentChat, joinChat, availableRooms } = useContext(
+    AppContext
+  )
   return (
-    <SidebarContainer>
-      <input
-        type=""
-        value={inp}
-        placeholder="Search"
-        onChange={(e) => {
-          setInp(e.target.value)
-        }}
-      />
-      <button onClick={() => joinChat(inp)}></button>
+    <div>
+      {isModal && (
+        <Modal
+          setIsModal={setIsModal}
+          setAreaValue={setDescriptionValue}
+          setInputValue={setTitleValue}
+          inputValue={titleValue}
+          areaValue={descriptionValue}
+          buttonClick={() => {joinChat(titleValue); setIsModal(false)}}
+        />
+      )}
+      <AllChannelsHeader>
+        <h3>Channels</h3>
+        <button onClick={() => setIsModal(true)}>Add</button>
+      </AllChannelsHeader>
       <ChannelsContainer>
         {chats?.map((chat) => (
-          <p
+          <Channel
             onClick={() => {
               setCurrentChat(chat.name)
               setAllChannelsMode(false)
             }}
           >
             {chat.name}
-          </p>
+          </Channel>
         ))}
+        <h3>Available</h3>
+        {availableRooms.map((room) => {
+          return (
+            <p
+              onClick={() => {
+                joinChat(room.name)
+              }}
+            >
+              {room.name}
+            </p>
+          )
+        })}
       </ChannelsContainer>
-      <h3>Available</h3>
-      {availableRooms.map((room) => {
-        return (
-          <p
-            onClick={() => {
-              joinChat(room.name)
-            }}
-          >
-            {room.name}
-          </p>
-        )
-      })}
-    </SidebarContainer>
+    </div>
   )
 }
 

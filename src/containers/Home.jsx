@@ -7,7 +7,6 @@ import Chat from '../components/Chat'
 import { HomeWrapper } from '../assets/styles/Home'
 
 const Home = ({}) => {
-  
   const initialState = useInitialState()
   return (
     <AppContext.Provider value={initialState}>
