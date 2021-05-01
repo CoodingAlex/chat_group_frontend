@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import socketIoClient from 'socket.io-client';
-import axion from 'axios';
 import axios from 'axios';
-
+import cookie from 'cookie'
+import useAuth from './useAuth'
 const ENDPOINT = 'http://localhost:8080';
 
 const useInitialState = () => {
@@ -14,17 +14,18 @@ const useInitialState = () => {
         filteredMessages: [],
     });
     const [socket, setSocket] = useState();
-
+    const { user, registerUser, userInCookies } = useAuth()
     useEffect(() => {
         try {
-            axios.post(
-                'http://localhost:8080/auth/register',
-                { name: 'Alex', photo: '' },
-                {
-                    withCredentials: true
+            if(!user) {
+                return
+            }
+            console.log(user)
+            const socket = socketIoClient(ENDPOINT, {
+                query: {
+                    user : user.name
                 }
-            );
-            const socket = socketIoClient(ENDPOINT);
+            });
             setSocket(socket);
 
             // This happens when you recibe a new message
@@ -45,7 +46,6 @@ const useInitialState = () => {
                     name: data.room,
                     users: data.users,
                 };
-                console.log('new room');
                 setAvailableRooms((prev) => [...prev, newChat]);
             });
             // This happens when you join to a new chat, or someone join to a chat
@@ -76,7 +76,7 @@ const useInitialState = () => {
             });
             //TODO: implement the error handling
         } catch (err) {}
-    }, []);
+    }, [user]);
 
     // This effect update the filtered messages (the messages that should be in the screen)
     // when the state current chat change or when you recibe a new message
@@ -124,6 +124,8 @@ const useInitialState = () => {
         chats,
         availableRooms,
         getCurrentChatUsers,
+        user,
+        registerUser
     };
 };
 

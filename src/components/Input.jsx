@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import AppContext from '../context/AppContext'
-import { ChatInputContainer } from '../assets/styles/components/Chat'
+import React, { useContext } from 'react';
+import AppContext from '../context/AppContext';
+import { ChatInputContainer } from '../assets/styles/components/Chat';
 const Input = ({ inp, setInp }) => {
-  const { sendMessage, currentChat } = useContext(AppContext)
+  const { sendMessage, currentChat } = useContext(AppContext);
   return (
     <ChatInputContainer>
       <input
@@ -10,17 +10,23 @@ const Input = ({ inp, setInp }) => {
         placeholder="Type a message here"
         value={inp}
         onChange={(e) => {
-          setInp(e.target.value)
+          setInp(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.isComposing || e.key == 'Enter') {
+            sendMessage(currentChat, inp);
+            setInp('');
+          }
         }}
       />
       <button
         onClick={() => {
-          sendMessage(currentChat, inp)
-          setInp('')
+          sendMessage(currentChat, inp);
+          setInp('');
         }}
       ></button>
     </ChatInputContainer>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;
