@@ -20,10 +20,10 @@ const useInitialState = () => {
             if(!user) {
                 return
             }
-            console.log(user)
+            console.log(user);
             const socket = socketIoClient(ENDPOINT, {
                 query: {
-                    user : user.name
+                   token: user.token
                 }
             });
             setSocket(socket);

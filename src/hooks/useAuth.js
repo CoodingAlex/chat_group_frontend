@@ -12,10 +12,11 @@ const useAuth = () => {
     return userExists;
   };
 
-  const registerUser = (user) => {
-    const { name, photo } = user;
+  const registerUser = async (user) => {
+    const { name, photo, password } = user;
     try {
-      axios.post(API, { name, photo }, { withCredentials: true });
+      const registeredUser = await axios.post(API, { name, photo, password }, { withCredentials: true });
+      user.token = registeredUser.data.user.token
     } catch (err) {}
     setUser(user);
     return user;
