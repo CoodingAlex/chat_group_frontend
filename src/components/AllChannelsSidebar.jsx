@@ -1,21 +1,21 @@
-import React, { useContext, useState } from 'react'
-import AppContext from '../context/AppContext'
+import React, { useContext, useState } from 'react';
+import AppContext from '../context/AppContext';
 import {
   ChannelsContainer,
   AllChannelsHeader,
   Channel,
-} from '../assets/styles/components/Sidebar'
-import Modal from './Modal'
+} from '../assets/styles/components/Sidebar';
+import Modal from './Modal';
 function memoized(prevProps, nextProps) {
-  return true
+  return true;
 }
 const AllChannelsSidebar = ({ setAllChannelsMode }) => {
-  const [titleValue, setTitleValue] = useState('')
-  const [descriptionValue, setDescriptionValue] = useState('')
-  const [isModal, setIsModal] = useState(false)
+  const [titleValue, setTitleValue] = useState('');
+  const [descriptionValue, setDescriptionValue] = useState('');
+  const [isModal, setIsModal] = useState(false);
   const { chats, setCurrentChat, joinChat, availableRooms } = useContext(
     AppContext
-  )
+  );
   return (
     <div>
       {isModal && (
@@ -25,7 +25,10 @@ const AllChannelsSidebar = ({ setAllChannelsMode }) => {
           setInputValue={setTitleValue}
           inputValue={titleValue}
           areaValue={descriptionValue}
-          buttonClick={() => {joinChat(titleValue); setIsModal(false)}}
+          buttonClick={() => {
+            joinChat(titleValue, descriptionValue);
+            setIsModal(false);
+          }}
         />
       )}
       <AllChannelsHeader>
@@ -36,8 +39,8 @@ const AllChannelsSidebar = ({ setAllChannelsMode }) => {
         {chats?.map((chat) => (
           <Channel
             onClick={() => {
-              setCurrentChat(chat.name)
-              setAllChannelsMode(false)
+              setCurrentChat(chat.name);
+              setAllChannelsMode(false);
             }}
           >
             {chat.name}
@@ -48,18 +51,18 @@ const AllChannelsSidebar = ({ setAllChannelsMode }) => {
           return (
             <p
               onClick={() => {
-                joinChat(room.name)
+                joinChat(room.name);
               }}
             >
               {room.name}
             </p>
-          )
+          );
         })}
       </ChannelsContainer>
     </div>
-  )
-}
+  );
+};
 
-const MemoizedAllChannelsSidebar = React.memo(AllChannelsSidebar, memoized)
+const MemoizedAllChannelsSidebar = React.memo(AllChannelsSidebar, memoized);
 
-export default MemoizedAllChannelsSidebar
+export default MemoizedAllChannelsSidebar;

@@ -4,6 +4,7 @@ export const SidebarContainer = styled.div`
     color: #bdbdbd;
     background-color: #120f13;
     font-family: 'Noto Sans', sans-serif;
+    position: relative;
     h3 {
         color: #e0e0e0;
     }

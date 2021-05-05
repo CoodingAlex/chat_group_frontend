@@ -1,21 +1,24 @@
-import React, { useContext } from 'react'
-import AppContext from '../context/AppContext'
+import React, { useContext } from 'react';
+import AppContext from '../context/AppContext';
 import {
   ChannelHeader,
   ChannelsContainer,
   MemberCard,
   DescriptionContainer,
   MembersContainer,
-} from '../assets/styles/components/Sidebar'
+} from '../assets/styles/components/Sidebar';
 const ChannelSidebar = ({ setAllChannelsMode }) => {
-  const { getCurrentChatUsers } = useContext(AppContext)
-  const users = getCurrentChatUsers()
+  const { getCurrentChatUsers, getCurrentChatDescription } = useContext(
+    AppContext
+  );
+  const users = getCurrentChatUsers();
+  const description = getCurrentChatDescription();
   return (
     <div>
       <ChannelHeader>
         <button
           onClick={() => {
-            setAllChannelsMode(true)
+            setAllChannelsMode(true);
           }}
         >
           back
@@ -24,8 +27,7 @@ const ChannelSidebar = ({ setAllChannelsMode }) => {
       </ChannelHeader>
       <ChannelsContainer>
         <DescriptionContainer>
-          <h3>Title description</h3>
-          <p>Description</p>
+          <p>{description}</p>
         </DescriptionContainer>
         <MembersContainer>
           <h3>Members</h3>
@@ -37,7 +39,7 @@ const ChannelSidebar = ({ setAllChannelsMode }) => {
         </MembersContainer>
       </ChannelsContainer>
     </div>
-  )
-}
+  );
+};
 
-export default ChannelSidebar
+export default ChannelSidebar;
