@@ -4,8 +4,10 @@ import {
   ChannelsContainer,
   AllChannelsHeader,
   Channel,
+  ChannelContainer,
 } from '../assets/styles/components/Sidebar';
 import Modal from './Modal';
+import ChatIcon from './ChatIcon';
 function memoized(prevProps, nextProps) {
   return true;
 }
@@ -37,25 +39,31 @@ const AllChannelsSidebar = ({ setAllChannelsMode }) => {
       </AllChannelsHeader>
       <ChannelsContainer>
         {chats?.map((chat) => (
-          <Channel
-            onClick={() => {
-              setCurrentChat(chat.name);
-              setAllChannelsMode(false);
-            }}
-          >
-            {chat.name}
-          </Channel>
-        ))}
-        <h3>Available</h3>
-        {availableRooms.map((room) => {
-          return (
-            <p
+          <ChannelContainer>
+            <ChatIcon name={chat.name} />
+            <Channel
               onClick={() => {
-                joinChat(room.name);
+                setCurrentChat(chat.name);
+                setAllChannelsMode(false);
               }}
             >
-              {room.name}
-            </p>
+              {chat.name}
+            </Channel>
+          </ChannelContainer>
+        ))}
+        <h3>Available</h3>
+        {availableRooms.map((chat) => {
+          return (
+            <ChannelContainer>
+              <ChatIcon name={chat.name} />
+              <Channel
+                onClick={() => {
+                  joinChat(chat.name);
+                }}
+              >
+                {chat.name}
+              </Channel>
+            </ChannelContainer>
           );
         })}
       </ChannelsContainer>

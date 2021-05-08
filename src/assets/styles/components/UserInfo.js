@@ -12,6 +12,10 @@ export const UserInfoStyled = styled.div`
   background: #0b090c;
 `;
 
+export const UserPhoto = styled.img`
+  max-height: 32px;
+  max-width: 32px;
+`;
 export const UserInfoMenuStyled = styled.div`
   display: ${(props) => (props.isMenu ? 'block' : 'none')};
   background: #252329;

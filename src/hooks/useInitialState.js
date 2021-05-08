@@ -48,13 +48,13 @@ const useInitialState = () => {
         };
         setAvailableRooms((prev) => [...prev, newChat]);
       });
-      // This happens when you join to a new chat, or someone join to a chat
-      // that you are already in
+
       socket.emit('availableChats', { token: user.token });
       socket.on('availableChats', (data) => {
         setAvailableRooms(data.chats);
       });
       socket.on('joinedRoom', (data) => {
+        console.log(data);
         const newChat = {
           name: data.room,
           users: data.users,
@@ -106,6 +106,7 @@ const useInitialState = () => {
       token: user.token,
       description,
       name: user.name,
+      photo: user.photo,
     });
     setAvailableRooms((prev) => {
       return prev.filter((item) => item.name !== chat);
@@ -125,7 +126,7 @@ const useInitialState = () => {
   };
 
   const sendMessage = (chat, message = 'aaa') => {
-    socket.emit('message', { room: chat, message });
+    socket.emit('message', { room: chat, message, token: user.token });
   };
 
   const disconnect = () => {

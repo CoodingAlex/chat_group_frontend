@@ -6,6 +6,8 @@ import {
   MemberCard,
   DescriptionContainer,
   MembersContainer,
+  MemberPhoto,
+  MemberUsername,
 } from '../assets/styles/components/Sidebar';
 const ChannelSidebar = ({ setAllChannelsMode }) => {
   const { getCurrentChatUsers, getCurrentChatDescription } = useContext(
@@ -33,7 +35,8 @@ const ChannelSidebar = ({ setAllChannelsMode }) => {
           <h3>Members</h3>
           {users.map((user) => (
             <MemberCard>
-              <p>{user}</p>
+              <MemberPhoto src={user.photo} alt={`${user.username} photo`} />
+              <MemberUsername>{user.username}</MemberUsername>
             </MemberCard>
           ))}
         </MembersContainer>

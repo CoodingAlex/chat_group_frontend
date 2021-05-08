@@ -11,6 +11,7 @@ import { set } from 'js-cookie';
 const ModalAuth = () => {
   const { registerUser, login } = useContext(AppContext);
   const [username, setUsername] = useState('');
+  const [photo, setPhoto] = useState('');
   const [password, setPassword] = useState('');
   //Toggle for register/login
   const [isRegister, setIsRegister] = useState(false);
@@ -21,7 +22,7 @@ const ModalAuth = () => {
       const user = {
         name: username,
         password,
-        photo: '',
+        photo,
       };
       if (isRegister) {
         const response = await registerUser(user);
@@ -34,6 +35,7 @@ const ModalAuth = () => {
 
       setPassword('');
       setUsername('');
+      setPhoto('');
       if (response.error) {
         throw new Error(response.err);
       }
@@ -59,11 +61,24 @@ const ModalAuth = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        {isRegister && (
+          <>
+            <label htmlFor="photo-input">Photo</label>
+            <ModalInput
+              placeholder="Photo"
+              id="photo-input"
+              value={photo}
+              onChange={(e) => setPhoto(e.target.value)}
+            />
+          </>
+        )}
+
         <label htmlFor="password-input">Password</label>
         <ModalInput
           placeholder="Password"
           id="password-input"
           value={password}
+          type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
         <RegisterToggle
