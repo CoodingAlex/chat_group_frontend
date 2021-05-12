@@ -3,6 +3,7 @@ import AppContext from '../context/AppContext';
 import {
   UserInfoStyled,
   UserPhoto,
+  OpenMenuIcon,
 } from '../assets/styles/components/UserInfo';
 const UserInfo = ({ setIsMenu }) => {
   const { user } = useContext(AppContext);
@@ -10,13 +11,12 @@ const UserInfo = ({ setIsMenu }) => {
     <UserInfoStyled>
       <UserPhoto src={user?.photo} alt="" />
       <p>{user?.name}</p>
-      <button
+      <OpenMenuIcon
+        className="fas fa-sort-up"
         onClick={() => {
           setIsMenu((prev) => !prev);
         }}
-      >
-        menu
-      </button>
+      ></OpenMenuIcon>
     </UserInfoStyled>
   );
 };

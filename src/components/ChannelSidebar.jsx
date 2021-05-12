@@ -8,6 +8,7 @@ import {
   MembersContainer,
   MemberPhoto,
   MemberUsername,
+  ChannelHeaderIcon,
 } from '../assets/styles/components/Sidebar';
 const ChannelSidebar = ({ setAllChannelsMode }) => {
   const { getCurrentChatUsers, getCurrentChatDescription } = useContext(
@@ -18,13 +19,12 @@ const ChannelSidebar = ({ setAllChannelsMode }) => {
   return (
     <div>
       <ChannelHeader>
-        <button
+        <ChannelHeaderIcon
+          className="fas fa-caret-left"
           onClick={() => {
             setAllChannelsMode(true);
           }}
-        >
-          back
-        </button>
+        ></ChannelHeaderIcon>
         <h3>All Channels</h3>
       </ChannelHeader>
       <ChannelsContainer>

@@ -4,6 +4,7 @@ import {
   ChatHeader,
   ChatContainer,
   ChatInputContainer,
+  OpenSidebarIcon,
   ChatMessages,
 } from '../assets/styles/components/Chat';
 import Message from './Message';
@@ -12,7 +13,7 @@ import Input from './Input';
 const Chat = ({}) => {
   const chat = useRef();
   const [inp, setInp] = useState('');
-  const { state, currentChat, messages } = useContext(AppContext);
+  const { state, currentChat, setIsSidebar } = useContext(AppContext);
   useEffect(() => {
     chat.current.scroll(0, chat.current.scrollHeight);
   }, [state]);
@@ -20,6 +21,10 @@ const Chat = ({}) => {
   return (
     <ChatContainer>
       <ChatHeader>
+        <OpenSidebarIcon
+          className="fas fa-bars"
+          onClick={() => setIsSidebar((prev) => !prev)}
+        />
         <p>{currentChat}</p>
       </ChatHeader>
       <ChatMessages ref={chat}>

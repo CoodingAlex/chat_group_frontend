@@ -7,12 +7,13 @@ import {
 } from '../assets/styles/components/UserInfo';
 
 const UserInfoMenu = ({ isMenu }) => {
-  const { logout, disconnect } = useContext(AppContext);
+  const { logout, disconnect, setIsSidebar } = useContext(AppContext);
   return (
     <UserInfoMenuStyled isMenu={isMenu}>
       <MenuOptions>
         <Option
           onClick={async () => {
+            setIsSidebar((prev) => !prev);
             await logout();
             disconnect();
           }}

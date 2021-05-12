@@ -5,6 +5,8 @@ import {
   AllChannelsHeader,
   Channel,
   ChannelContainer,
+  AddChannelIcon,
+  AddChannelIconContainer,
 } from '../assets/styles/components/Sidebar';
 import Modal from './Modal';
 import ChatIcon from './ChatIcon';
@@ -15,9 +17,8 @@ const AllChannelsSidebar = ({ setAllChannelsMode }) => {
   const [titleValue, setTitleValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState('');
   const [isModal, setIsModal] = useState(false);
-  const { chats, setCurrentChat, joinChat, availableRooms } = useContext(
-    AppContext
-  );
+  const { chats, setCurrentChat, joinChat, availableRooms } =
+    useContext(AppContext);
   return (
     <div>
       {isModal && (
@@ -35,34 +36,32 @@ const AllChannelsSidebar = ({ setAllChannelsMode }) => {
       )}
       <AllChannelsHeader>
         <h3>Channels</h3>
-        <button onClick={() => setIsModal(true)}>Add</button>
+        <AddChannelIconContainer onClick={() => setIsModal(true)}>
+          <AddChannelIcon className="fas fa-plus"></AddChannelIcon>
+        </AddChannelIconContainer>
       </AllChannelsHeader>
       <ChannelsContainer>
         {chats?.map((chat) => (
-          <ChannelContainer>
+          <ChannelContainer
+            onClick={() => {
+              setCurrentChat(chat.name);
+              setAllChannelsMode(false);
+            }}
+          >
             <ChatIcon name={chat.name} />
-            <Channel
-              onClick={() => {
-                setCurrentChat(chat.name);
-                setAllChannelsMode(false);
-              }}
-            >
-              {chat.name}
-            </Channel>
+            <Channel>{chat.name}</Channel>
           </ChannelContainer>
         ))}
         <h3>Available</h3>
         {availableRooms.map((chat) => {
           return (
-            <ChannelContainer>
+            <ChannelContainer
+              onClick={() => {
+                joinChat(chat.name);
+              }}
+            >
               <ChatIcon name={chat.name} />
-              <Channel
-                onClick={() => {
-                  joinChat(chat.name);
-                }}
-              >
-                {chat.name}
-              </Channel>
+              <Channel>{chat.name}</Channel>
             </ChannelContainer>
           );
         })}

@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
-import { ChatInputContainer } from '../assets/styles/components/Chat';
+import {
+  ChatInputContainer,
+  SendMessageIcon,
+} from '../assets/styles/components/Chat';
 const Input = ({ inp, setInp }) => {
   const { sendMessage, currentChat } = useContext(AppContext);
   return (
@@ -24,7 +27,9 @@ const Input = ({ inp, setInp }) => {
           sendMessage(currentChat, inp);
           setInp('');
         }}
-      ></button>
+      >
+        <SendMessageIcon className="far fa-paper-plane"></SendMessageIcon>
+      </button>
     </ChatInputContainer>
   );
 };

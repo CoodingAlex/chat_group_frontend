@@ -6,7 +6,7 @@ export const UserInfoStyled = styled.div`
   left: 0;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   height: 10%;
   background: #0b090c;
@@ -16,6 +16,10 @@ export const UserPhoto = styled.img`
   max-height: 32px;
   max-width: 32px;
 `;
+
+export const OpenMenuIcon = styled.i`
+  cursor: pointer;
+ `
 export const UserInfoMenuStyled = styled.div`
   display: ${(props) => (props.isMenu ? 'block' : 'none')};
   background: #252329;
