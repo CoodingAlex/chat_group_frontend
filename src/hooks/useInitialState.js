@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import socketIoClient from 'socket.io-client';
 import useAuth from './useAuth';
-const ENDPOINT = process.env.ENDPOINT || 'http://localhost:8080';
+const ENDPOINT = 'https://chat-gruop.herokuapp.com/';
 
 const useInitialState = () => {
   const [currentChat, setCurrentChat] = useState('welcome');
