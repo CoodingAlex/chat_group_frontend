@@ -17,12 +17,9 @@ const ModalAuth = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState('');
   const handleClick = async (e) => {
-    console.log(isLoading);
     if (isLoading) {
-      console.log('not loading');
       return;
     }
-    console.log('loading');
     setIsLoading(true);
     setError('');
     try {
@@ -44,7 +41,6 @@ const ModalAuth = () => {
       setUsername('');
       setPhoto('');
       setIsLoading(false);
-      console.log('logged');
       if (response.error) {
         throw new Error(response.err);
       }
