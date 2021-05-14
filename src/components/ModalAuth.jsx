@@ -7,7 +7,6 @@ import {
   AddChannelModal,
   RegisterToggle,
 } from '../assets/styles/components/Modal';
-import { set } from 'js-cookie';
 const ModalAuth = () => {
   const { registerUser, login, isLoading, setIsLoading } =
     useContext(AppContext);
@@ -18,9 +17,12 @@ const ModalAuth = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState('');
   const handleClick = async (e) => {
+    console.log(isLoading);
     if (isLoading) {
+      console.log('not loading');
       return;
     }
+    console.log('loading');
     setIsLoading(true);
     setError('');
     try {
@@ -31,20 +33,21 @@ const ModalAuth = () => {
       };
       if (isRegister) {
         const response = await registerUser(user);
+        setIsLoading(false);
         if (response.err) {
           throw new Error(response.err);
         }
         return;
       }
       const response = await login(username, password);
-
       setPassword('');
       setUsername('');
       setPhoto('');
+      setIsLoading(false);
+      console.log('logged');
       if (response.error) {
         throw new Error(response.err);
       }
-      setIsLoading(false);
     } catch (err) {
       const isUnauthorized = err.message.match(/401/);
       if (isUnauthorized) {
