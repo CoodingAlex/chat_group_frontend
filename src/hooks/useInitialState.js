@@ -10,6 +10,7 @@ const useInitialState = () => {
   const [chats, setChats] = useState([]);
   const [availableRooms, setAvailableRooms] = useState([]);
   const [isSidebar, setIsSidebar] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState({
     filteredMessages: [],
   });
@@ -159,6 +160,8 @@ const useInitialState = () => {
     getCurrentChatDescription,
     isSidebar,
     setIsSidebar,
+    isLoading,
+    setIsLoading,
   };
 };
 

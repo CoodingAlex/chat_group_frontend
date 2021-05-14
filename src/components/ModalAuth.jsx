@@ -9,7 +9,8 @@ import {
 } from '../assets/styles/components/Modal';
 import { set } from 'js-cookie';
 const ModalAuth = () => {
-  const { registerUser, login } = useContext(AppContext);
+  const { registerUser, login, isLoading, setIsLoading } =
+    useContext(AppContext);
   const [username, setUsername] = useState('');
   const [photo, setPhoto] = useState('');
   const [password, setPassword] = useState('');
@@ -17,6 +18,10 @@ const ModalAuth = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState('');
   const handleClick = async (e) => {
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
     setError('');
     try {
       const user = {
@@ -39,6 +44,7 @@ const ModalAuth = () => {
       if (response.error) {
         throw new Error(response.err);
       }
+      setIsLoading(false);
     } catch (err) {
       const isUnauthorized = err.message.match(/401/);
       if (isUnauthorized) {
@@ -47,6 +53,7 @@ const ModalAuth = () => {
         } else {
           setError('Username or password incorrect');
         }
+        setIsLoading(false);
       }
     }
   };
