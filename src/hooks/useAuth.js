@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 const API = 'https://chat-gruop.herokuapp.com/auth';
+//const API = 'http://localhost:8080/auth';
 const useAuth = () => {
   const [user, setUser] = useState();
 

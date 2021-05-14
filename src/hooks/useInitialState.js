@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import socketIoClient from 'socket.io-client';
 import useAuth from './useAuth';
 const ENDPOINT = 'https://chat-gruop.herokuapp.com/';
+//const ENDPOINT = 'http://localhost:8080/';
 
 const useInitialState = () => {
   const [currentChat, setCurrentChat] = useState('welcome');
@@ -22,6 +23,9 @@ const useInitialState = () => {
           login().then(() => {});
           return;
         }
+      }
+      if (socket) {
+        return;
       }
       const socket = socketIoClient(ENDPOINT, {
         query: {
@@ -80,6 +84,10 @@ const useInitialState = () => {
       });
       //TODO: implement the error handling
     } catch (err) {}
+    return () => {
+      socket?.disconnect();
+      setSocket(null);
+    };
   }, [user]);
 
   // This effect update the filtered messages (the messages that should be in the screen)
