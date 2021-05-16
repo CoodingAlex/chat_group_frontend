@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import socketIoClient from 'socket.io-client';
 import useAuth from './useAuth';
@@ -110,7 +111,7 @@ const useInitialState = () => {
     return filteredMessages;
   };
 
-  const joinChat = (chat, description) => {
+  const joinChat = async (chat, description) => {
     socket?.emit('joinRoom', {
       room: chat,
       token: user.token,
@@ -121,6 +122,16 @@ const useInitialState = () => {
     setAvailableRooms((prev) => {
       return prev.filter((item) => item.name !== chat);
     });
+
+    try {
+      const messages = await (
+        await axios.get(`${ENDPOINT}messages/room/${chat}`)
+      ).data.data;
+      setMessages((prev) => [...prev, ...messages]);
+      console.log(messages);
+    } catch (err) {
+      console.log(err);
+    }
     setCurrentChat(chat);
   };
 
