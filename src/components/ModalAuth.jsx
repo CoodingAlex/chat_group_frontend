@@ -7,6 +7,7 @@ import {
   AddChannelModal,
   RegisterToggle,
 } from '../assets/styles/components/Modal';
+import Spinner from './LoadingSpinner';
 const ModalAuth = () => {
   const { registerUser, login, isLoading, setIsLoading } =
     useContext(AppContext);
@@ -98,9 +99,15 @@ const ModalAuth = () => {
             : 'You dont have an account? Register'}
         </RegisterToggle>
         <p>{error}</p>
-        <ModalButton onClick={(e) => handleClick()}>
-          {isRegister ? 'Register' : 'Log In'}
-        </ModalButton>
+        {isLoading ? (
+          <ModalButton onClick={(e) => handleClick()}>
+            {isLoading && <Spinner />}
+          </ModalButton>
+        ) : (
+          <ModalButton onClick={(e) => handleClick()}>
+            {isRegister ? 'Register' : 'Log In'}
+          </ModalButton>
+        )}
       </AddChannelModal>
     </ModalContainer>
   );
